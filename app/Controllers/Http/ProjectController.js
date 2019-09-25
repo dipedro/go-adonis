@@ -9,10 +9,12 @@ const Project = use('App/Models/Project')
  * Resourceful controller for interacting with projects
  */
 class ProjectController {
-  async index () {
+  async index ({ request }) {
+    const { page } = request.get()
+
     const projects = await Project.query()
       .with('user')
-      .paginate(1)
+      .paginate(page)
 
     return projects
   }
