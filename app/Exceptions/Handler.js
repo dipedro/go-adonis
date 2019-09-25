@@ -3,6 +3,8 @@
 const Env = use('Env')
 const Youch = use('youch')
 const BaseExceptionHandler = use('BaseExceptionHandler')
+const Sentry = use('@sentry/node')
+const Config = use('Config')
 
 class ExceptionHandler extends BaseExceptionHandler {
   async handle (error, { request, response }) {
@@ -19,9 +21,9 @@ class ExceptionHandler extends BaseExceptionHandler {
   }
 
   // eslint-disable-next-line require-await
-  async report (error, { request }) {
-    // eslint-disable-next-line no-console
-    console.log(error)
+  async report (error) {
+    Sentry.init({ dsn: Env.get.SENTRY_DSN })
+    Sentry.captureException(error)
   }
 }
 
