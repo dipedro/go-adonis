@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
@@ -15,6 +15,10 @@ class User extends Model {
         userInstance.password = await Hash.make(userInstance.password)
       }
     })
+  }
+
+  addresses () {
+    return this.hasMany('App/Models/UserAddress')
   }
 
   tokens () {
